@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  nginx:
+    image: nginx:1.23.3
+    container_name: nginx
+    volumes:
+      - ./config/nginx.conf:/etc/nginx/conf.d/nginx.conf
+      - ./certs/cert-trust.pem:/etc/nginx/ssl/cert-trust.pem
+      - ./certs/key.pem:/etc/nginx/ssl/key.pem
+      - ./www:/usr/share/nginx/html
+    ports:
+      - 8080:8080
+      - 443:443
+    stdin_open: true 
+    tty: true

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Spring SSE Demo</title>
+</head>
+<body>
+    <h1>Server-Sent Events (SSE) with Spring</h1>
+    <div id="events"></div>
+
+    <script>
+        const eventSource = new EventSource("https://localhost/api/v1/sse/subscribe");
+
+		eventSource.onopen = ((ev) => console.log(ev));
+
+        eventSource.onmessage = (event) => {
+            console.log(event);
+            const div = document.createElement("div");
+            div.textContent = `Event received: ${event.data}`;
+            document.getElementById("events").appendChild(div);
+        };
+
+        // exemple de gestion des noms d'event
+        // eventSource.addEventListener('message', (event)=>{
+        //     console.info(event);
+        //     const div = document.createElement("div");
+        //     div.textContent = `Event received: ${event.data}`;
+        //     document.getElementById("events").appendChild(div);
+        // })
+
+        eventSource.onerror = (error) => {
+            console.error("Error occurred:", error);
+        };
+    </script>
+</body>
+</html>
